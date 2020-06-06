@@ -30,7 +30,7 @@ def render(filepath="tmp/alley.blend"):
     bpy.context.scene.cycles.device = 'GPU'
     scene = bpy.context.scene
     scene.render.image_settings.file_format = 'PNG'
-    scene.render.filepath = "C:/Users/foggy/OneDrive/Documents/BlenderNetworkRender/static/" + name_from_file(filepath) + ".png"
+    scene.render.filepath = "C:/Users/foggy/Documents/Github/BlenderNetworkRender/static/" + name_from_file(filepath) + ".png"
     print(bpy.ops.render.render(write_still=1))
 
 def name_from_file(filename):
