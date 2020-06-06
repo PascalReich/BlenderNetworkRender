@@ -1,4 +1,7 @@
 import bpy
+import sys
+dir = "C:/Users/foggy/Appdata/roaming/python37/site-packages"
+sys.path.append(dir)
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
 import eventlet
