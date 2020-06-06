@@ -1,26 +1,7 @@
 import bpy
-import sys
-import subprocess
-
-
-def install(package):
-    subprocess.check_call(sys.executable, "-m", "pip", "install", package)
-
-
-try:
-    from flask import Flask, request, render_template
-except ImportError:
-    install("flask")
-    from flask import Flask, request, render_template
-
+from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
-
-try:
-    import eventlet
-except ImportError:
-    install("eventlet")
-    import eventlet
-
+import eventlet
 from eventlet import wsgi
 
 app = Flask(__name__)
@@ -42,19 +23,16 @@ def submit():
 
 def render(filepath="tmp/alley.blend"):
     bpy.ops.wm.open_mainfile(filepath=filepath)
-    # print("yay")
+    #print("yay")
     bpy.context.scene.cycles.device = 'GPU'
     scene = bpy.context.scene
     scene.render.image_settings.file_format = 'PNG'
-    scene.render.filepath = "C:/Users/foggy/OneDrive/Documents/BlenderNetworkRender/static/" + name_from_file(
-        filepath) + ".png"
+    scene.render.filepath = "C:/Users/foggy/OneDrive/Documents/BlenderNetworkRender/static/" + name_from_file(filepath) + ".png"
     print(bpy.ops.render.render(write_still=1))
-
 
 def name_from_file(filename):
     return filename.split("/").pop().split(".")[0]
 
-
 # render()
-# app.run("0.0.0.0", 5000)
+#app.run("0.0.0.0", 5000)
 wsgi.server(eventlet.listen(('', 8000)), app)
